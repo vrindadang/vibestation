@@ -2,11 +2,14 @@
 import { GoogleGenAI, Type } from "@google/genai";
 import { AIAppDetails } from "../types";
 
-// Initialize the API client using process.env.API_KEY directly as required by guidelines
-const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
-
+/**
+ * Generates a short description for an app using Gemini AI.
+ * Initializing inside the function ensures the API key is retrieved at the moment of use.
+ */
 export const generateAppDetails = async (appName: string, url: string): Promise<AIAppDetails | null> => {
   try {
+    const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
+    
     const prompt = `
       I am adding a web application to my dashboard.
       App Name: "${appName}"
@@ -15,7 +18,6 @@ export const generateAppDetails = async (appName: string, url: string): Promise<
       Please generate a short, catchy description (max 15 words).
     `;
 
-    // Always use ai.models.generateContent with model name and prompt together
     const response = await ai.models.generateContent({
       model: 'gemini-3-flash-preview',
       contents: prompt,
@@ -35,7 +37,6 @@ export const generateAppDetails = async (appName: string, url: string): Promise<
       }
     });
 
-    // Access the .text property directly (not a method)
     const text = response.text;
     if (!text) return null;
     
