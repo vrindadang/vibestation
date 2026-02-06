@@ -1,0 +1,5 @@
+{
+  "name": "VIBE station",
+  "description": "A centralized dashboard for VibeCoding Club members to manage and launch applications.",
+  "requestFramePermissions": []
+}
